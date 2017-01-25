@@ -32,7 +32,8 @@ public class SearchFilter {
 	 * searchParams中key的格式为OPERATOR_FIELDNAME
 	 */
 	public static Map<String, SearchFilter> parse(Map<String, Object> searchParams) {
-		Map<String, SearchFilter> filters = Maps.newHashMap();
+		//LTE and GTE 实现between
+		Map<String, SearchFilter> filters = Maps.newIdentityHashMap();
 
 		for (Entry<String, Object> entry : searchParams.entrySet()) {
 			// 过滤掉空值
@@ -52,7 +53,7 @@ public class SearchFilter {
 
 			// 创建searchFilter
 			SearchFilter filter = new SearchFilter(filedName, operator, value);
-			filters.put(key, filter);
+			filters.put(new String(key), filter);
 		}
 
 		return filters;
