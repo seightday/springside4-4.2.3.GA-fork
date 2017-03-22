@@ -44,6 +44,22 @@ public class Search {
         List<Sort.Order> orderList=new ArrayList<>();
         if(orders!=null&&!orders.isEmpty()){
             orders.forEach((k,v)->{
+                //order_0_biz orderList.add(0,order)
+                //order_1_status orderList.add(1,order)
+                Integer idx=null;
+                if(k.contains("_")){
+                    String[] split = k.split("_");
+                    k=split[1];
+                    idx=Integer.valueOf(split[0]);
+                }
+                Sort.Order order = new Sort.Order(Sort.Direction.fromString(v.toString()),k);
+                if (idx!=null){
+                    orderList.add(idx,order);
+                }else {
+                    orderList.add(order);
+                }
+        if(orders!=null&&!orders.isEmpty()){
+            orders.forEach((k,v)->{
                 Sort.Order order = new Sort.Order(Sort.Direction.fromString(v.toString()),k);
                 orderList.add(order);
             });

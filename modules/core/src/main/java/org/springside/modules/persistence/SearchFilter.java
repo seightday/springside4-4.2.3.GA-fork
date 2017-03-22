@@ -5,17 +5,19 @@
  *******************************************************************************/
 package org.springside.modules.persistence;
 
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+
+import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.collect.Maps;
 
 public class SearchFilter {
 
 	public enum Operator {
-		EQ, LIKE, GT, LT, GTE, LTE
+		EQ, LIKE, GT, LT, GTE, LTE,IN,ISNULL,NEQ
 	}
 
 	public String fieldName;
@@ -39,17 +41,38 @@ public class SearchFilter {
 			// 过滤掉空值
 			String key = entry.getKey();
 			Object value = entry.getValue();
-			if (StringUtils.isBlank((String) value)) {
+			if (StringUtils.isBlank((String) value)||"NULL".equals(value)) {
 				continue;
 			}
 
-			// 拆分operator与filedAttribute
+			//IN_name_String
+			//GT_date_DATETIME
+			//ISNULL_type
+			//NEQ_status
+
+			// 拆分operator、filedAttribute、type
 			String[] names = StringUtils.split(key, "_");
-			if (names.length != 2) {
-				throw new IllegalArgumentException(key + " is not a valid search filter name");
-			}
+//			if (names.length < 2) {
+//				throw new IllegalArgumentException(key + " is not a valid search filter name");
+//			}
 			String filedName = names[1];
 			Operator operator = Operator.valueOf(names[0]);
+			String type=names.length==3?names[2]:null;//TODO Long Integer
+			switch (operator) {
+				case IN:
+					String v = value.toString();
+					String[] strings = v.split(",");
+					value= Arrays.asList(strings);//TODO type
+					break;
+			}
+
+			if("DATETIME".equals(type)){
+				try {
+					value=DateUtils.parseDate(value.toString(),"yyyy-MM-dd HH:mm:ss");
+				} catch (ParseException e) {
+					e.printStackTrace();//TODO
+				}
+			}
 
 			// 创建searchFilter
 			SearchFilter filter = new SearchFilter(filedName, operator, value);

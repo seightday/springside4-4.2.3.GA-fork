@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springside</groupId>
 		<artifactId>springside-parent</artifactId>
-		<version>4.2.3-GA</version>
+		<version>4.2.3-GA-1</version>
 		<relativePath>../parent/</relativePath>
 	</parent>
 	<artifactId>springside-core</artifactId>
@@ -238,6 +238,15 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
