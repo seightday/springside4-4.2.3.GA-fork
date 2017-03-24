@@ -15,6 +15,8 @@ import org.springside.modules.nosql.redis.pool.JedisPool;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
 import redis.clients.jedis.Tuple;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
@@ -207,6 +209,36 @@ public class JedisTemplate {
 			}
 		});
 	}
+	
+	// / Key Actions ///
+	public Set<String> keys(final String pattern) {
+		return execute(new JedisAction<Set<String>>() {
+			@Override
+			public Set<String> action(Jedis jedis) {
+				return jedis.keys(pattern);
+			}
+		});
+	}
+	
+	public Long expire(final String key,final int seconds){
+		return execute(new JedisAction<Long>() {
+			@Override
+			public Long action(Jedis jedis) {
+				return jedis.expire(key, seconds);
+			}
+		});
+	}
+	
+	public List<String> scan(final String cursor,final String match,final int count) {
+		return execute(new JedisAction<List<String>>() {
+			@Override
+			public List<String> action(Jedis jedis) {
+				ScanParams params=new ScanParams();
+				return jedis.scan(cursor, params).getResult();
+			}
+		});
+	}
+	
 
 	// / String Actions ///
 
@@ -535,6 +567,16 @@ public class JedisTemplate {
 			}
 		});
 	}
+	
+	public String lpop(final String key) {
+		return execute(new JedisAction<String>() {
+
+			@Override
+			public String action(Jedis jedis) {
+				return jedis.lpop(key);
+			}
+		});
+	}
 
 	public String brpop(final String key) {
 		return execute(new JedisAction<String>() {
@@ -677,6 +719,16 @@ public class JedisTemplate {
 			@Override
 			public Set<String> action(Jedis jedis) {
 				return jedis.smembers(key);
+			}
+		});
+	}
+	
+	public Boolean sismember(final String key,final String member){
+		return execute(new JedisAction<Boolean>() {
+
+			@Override
+			public Boolean action(Jedis jedis) {
+				return jedis.sismember(key, member);
 			}
 		});
 	}
