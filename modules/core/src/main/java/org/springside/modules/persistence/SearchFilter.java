@@ -17,7 +17,7 @@ import java.util.Map.Entry;
 public class SearchFilter {
 
 	public enum Operator {
-		EQ, LIKE, GT, LT, GTE, LTE,IN,ISNULL,NEQ
+		EQ, LIKE, GT, LT, GTE, LTE,IN,ISNULL,NOTNULL,NEQ
 	}
 
 	public String fieldName;
@@ -28,6 +28,10 @@ public class SearchFilter {
 		this.fieldName = fieldName;
 		this.value = value;
 		this.operator = operator;
+	}
+
+	public static Map<String, SearchFilter> filters() {
+		return Maps.newIdentityHashMap();
 	}
 
 	/**
@@ -69,6 +73,18 @@ public class SearchFilter {
 			if("DATETIME".equals(type)){
 				try {
 					value=DateUtils.parseDate(value.toString(),"yyyy-MM-dd HH:mm:ss");
+				} catch (ParseException e) {
+					e.printStackTrace();//TODO
+				}
+			}else if("DATE".equals(type)){
+				try {
+					value=DateUtils.parseDate(value.toString(),"yyyy-MM-dd");
+				} catch (ParseException e) {
+					e.printStackTrace();//TODO
+				}
+			}else if("TIME".equals(type)){
+				try {
+					value=DateUtils.parseDate(value.toString(),"HH:mm:ss");
 				} catch (ParseException e) {
 					e.printStackTrace();//TODO
 				}

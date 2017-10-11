@@ -4,7 +4,7 @@
 
   <groupId>org.springside.examples</groupId>
   <artifactId>quickstart-archetype</artifactId>
-  <version>4.2.3-GA-1</version>
+  <version>4.2.3-GA-5</version>
   <packaging>maven-archetype</packaging>
 
   <name>SpringSide :: Archetype :: QuickStart</name>

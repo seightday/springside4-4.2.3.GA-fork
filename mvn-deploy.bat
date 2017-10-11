@@ -11,5 +11,5 @@ call %MVN% clean deploy -Dmaven.test.skip=true
 if errorlevel 1 goto error
 
 cd ..\support\maven-archetype 
-call %MVN% clean deploy -Dmaven.test.skip=true
+call %MVN% clean deploy -X -Dmaven.test.skip=true
 pause
