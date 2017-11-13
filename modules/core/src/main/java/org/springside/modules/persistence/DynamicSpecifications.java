@@ -5,23 +5,17 @@
  *******************************************************************************/
 package org.springside.modules.persistence;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springside.modules.utils.Collections3;
 
-import com.google.common.collect.Lists;
+import javax.persistence.criteria.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DynamicSpecifications {
 
@@ -149,6 +143,15 @@ public class DynamicSpecifications {
 				}
 
 				return builder.conjunction();
+			}
+		};
+	}
+
+	public static <T> Specification<T> idSpec(final Object id) {
+		return new Specification<T>() {
+			@Override
+			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+				return builder.equal(root.get("id"), id);
 			}
 		};
 	}
