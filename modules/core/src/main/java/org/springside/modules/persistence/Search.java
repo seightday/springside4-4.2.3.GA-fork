@@ -7,12 +7,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springside.modules.web.Servlets;
 
 import javax.servlet.ServletRequest;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Search {
+
+    public final static int DEAULT_PAGE_SIZE  = 10;
 
 
     public static Map<String, SearchFilter> parse(ServletRequest request, String prefix) {
@@ -31,7 +32,7 @@ public class Search {
 
     public static PageRequest page(ServletRequest request, String orderPrefix, Sort defaultSort) {
         String _pageSize = request.getParameter("numPerPage");//dwz参数
-        int pageSize=20;
+        int pageSize=DEAULT_PAGE_SIZE;
         if(StringUtils.isNotBlank(_pageSize)){
             pageSize=Integer.valueOf(_pageSize);
         }
