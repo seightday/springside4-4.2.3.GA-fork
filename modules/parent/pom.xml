@@ -11,7 +11,7 @@
 	<properties>
 		<!-- 主要依赖库的版本定义 -->
 		<springside.version>4.2.3-GA-9</springside.version>
-		<spring.version>4.0.5.RELEASE</spring.version>
+		<spring.version>5.2.1.RELEASE</spring.version>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<mybatis.version>3.2.7</mybatis.version>
 		<spring-data-jpa.version>1.6.0.RELEASE</spring-data-jpa.version>
