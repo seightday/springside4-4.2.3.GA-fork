@@ -57,6 +57,9 @@ public class DynamicSpecifications {
 							case IN:
 								predicates.add(expression.in((Collection<?>)filter.value));
 								break;
+							case NOTIN:
+								predicates.add(expression.in((Collection<?>)filter.value).not());
+								break;
 							case ISNULL:
 								predicates.add(builder.isNull(expression));
 								break;

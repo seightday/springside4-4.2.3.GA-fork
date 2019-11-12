@@ -17,7 +17,7 @@ import java.util.Map.Entry;
 public class SearchFilter {
 
 	public enum Operator {
-		EQ, LIKE, GT, LT, GTE, LTE,IN,ISNULL,NOTNULL,NEQ
+		EQ, LIKE, GT, LT, GTE, LTE,IN,NOTIN,ISNULL,NOTNULL,NEQ
 	}
 
 	public String fieldName;
@@ -45,7 +45,9 @@ public class SearchFilter {
 			// 过滤掉空值
 			String key = entry.getKey();
 			Object value = entry.getValue();
-			if (StringUtils.isBlank((String) value)||"NULL".equals(value)) {
+			if("BLANK".equals(value)){
+				value="";
+			}else if (StringUtils.isBlank((String) value)||"NULL".equals(value)) {
 				continue;
 			}
 
@@ -62,10 +64,18 @@ public class SearchFilter {
 			String filedName = names[1];
 			Operator operator = Operator.valueOf(names[0]);
 			String type=names.length==3?names[2]:null;//TODO Long Integer
+
+			String v=null;
+			String[] strings=null;
 			switch (operator) {
 				case IN:
-					String v = value.toString();
-					String[] strings = v.split(",");
+					v = value.toString();
+					strings = v.split(",");
+					value= Arrays.asList(strings);//TODO type
+					break;
+				case NOTIN:
+					v = value.toString();
+					strings = v.split(",");
 					value= Arrays.asList(strings);//TODO type
 					break;
 			}
@@ -88,6 +98,8 @@ public class SearchFilter {
 				} catch (ParseException e) {
 					e.printStackTrace();//TODO
 				}
+			}else if("BOOL".equals(type)){
+				value=Boolean.valueOf(value.toString());
 			}
 
 			// 创建searchFilter
