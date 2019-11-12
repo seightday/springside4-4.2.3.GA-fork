@@ -7,7 +7,7 @@
 		<!--<artifactId>springside-parent</artifactId>-->
 		<!--<version>4.2.3-GA</version>-->
 		<!--<relativePath>../modules/parent/</relativePath>-->
-	<!--</parent>	-->
+	<!--</parent>-->
 
 	<groupId>org.springside</groupId>
 	<version>4.2.3-GA-9</version>
@@ -16,7 +16,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!--<module>parent</module>-->
+		<module>parent</module>
 		<module>core</module>
 		<module>extension</module>
 		<module>metrics</module>
