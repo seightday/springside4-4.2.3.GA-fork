@@ -17,7 +17,7 @@
 		<spring-data-jpa.version>1.6.0.RELEASE</spring-data-jpa.version>
 		<tomcat-jdbc.version>7.0.54</tomcat-jdbc.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
-		<shiro.version>1.2.3</shiro.version>
+		<shiro.version>1.5.0</shiro.version>
 		<cxf.version>2.7.11</cxf.version>
 		<activemq.version>5.7.0</activemq.version>
 		<quartz.version>2.2.1</quartz.version>
